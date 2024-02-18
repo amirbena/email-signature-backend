@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - '27018:27018'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: amir
+      MONGO_INITDB_ROOT_PASSWORD: amir
+
+  nestjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URL: mongodb://amir:amir@127.0.0.1:27018/email-signature
